@@ -29,21 +29,35 @@ function loadData() {
     // load streetview
 
     // YOUR CODE GOES HERE!
-    baseURL = "http://api.nytimes.com/svc/search/v2/articlesearch";
-    query = "&fq=source:('The New York Times')";
-    URL = baseURL + query;
+    baseURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=";
+    sortQuery  = "&sort=newes"
+    key = "&api-key=4a9f8aaddf77876bf57d1d02b5c3cde0:19:70181836";
+    URL = baseURL + address + sortQuery + key;
 
     $.getJSON(URL, function (data) {
       console.log(data);
-      var items = [];
-      $.each( data, function( key, val ) {
-        item.push( "<li id='" + key + "'>" + val + "</li>");
-      });
 
-      $( "<ul/>", {
-        "class": "my-new-list",
-        html: items.join( "" )
-      }).appendTo( "body" );
+      $nytHeaderElem.text('New York Times Articles About' + address);
+      articles = data.response.docs;
+
+      for (var i = 0; i < articles.length; i++) {
+        var article = articles[i];
+        $nytElem.append('<li class="article">' +
+          '<a href="' + article.web_url + '">' +
+          article.headline.main + '</a>' +
+          '<p>' + article.snippet + '</p>' +
+          '</li>');
+      }
+
+      // var items = [];
+      // $.each( data, function( key, val ) {
+      //   item.push( "<li id='" + key + "'>" + val + "</li>");
+      // });
+      //
+      // $( "<ul/>", {
+      //   "class": "my-new-list",
+      //   html: items.join( "" )
+      // }).appendTo( "body" );
     });
 
     return false;
