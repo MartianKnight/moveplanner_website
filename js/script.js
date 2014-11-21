@@ -29,10 +29,10 @@ function loadData() {
     // NYT API
     baseURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=";
     sortQuery  = "&sort=newes"
-    key = "&api-key=4a9f8aaddf77876bf57d1d02b5c3cde0:19:70181836";
-    URL = baseURL + address + sortQuery + key;
+    nytKey = "&api-key=4a9f8aaddf77876bf57d1d02b5c3cde0:19:70181836";
+    nytURL = baseURL + address + sortQuery + nytKey;
 
-    $.getJSON(URL, function (data) {
+    $.getJSON(nytURL, function (data) {
       console.log(data);
 
       $nytHeaderElem.text('New York Times Articles About' + address);
@@ -52,6 +52,22 @@ function loadData() {
     });
 
     // WIKI API
+    var wikiURL = 'http://en.wikipedia.org/w/api.
+      php?action=opensearch&search=' + address + '
+      &format=json&callback=wikiCallback';
+    $.ajax( {
+      url: wikiURL,
+      dataType: "jsonp",
+      success: function( response ){
+          var articleList = response[1];
+          for (var i = 0, i < articleList.length; i++) {
+            articleStr = articleList[i];
+            var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+            $wikiElem.append('<li><a href="' + url + '">' +
+              articleStr + '</a></li>');
+          }
+      }
+    })
 
     return false;
 };
