@@ -58,6 +58,9 @@ function loadData() {
       //   "class": "my-new-list",
       //   html: items.join( "" )
       // }).appendTo( "body" );
+    }).error(function(e) {
+      $nytHeaderElem.text('New York Times Articles Could Not Be Loaded');
+      console.log(e);
     });
 
     return false;
