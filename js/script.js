@@ -29,7 +29,22 @@ function loadData() {
     // load streetview
 
     // YOUR CODE GOES HERE!
-    $.getJSON();
+    baseURL = "http://api.nytimes.com/svc/search/v2/articlesearch";
+    query = "&fq=source:('The New York Times')";
+    URL = baseURL + query;
+
+    $.getJSON(URL, function (data) {
+      console.log(data);
+      var items = [];
+      $.each( data, function( key, val ) {
+        item.push( "<li id='" + key + "'>" + val + "</li>");
+      });
+
+      $( "<ul/>", {
+        "class": "my-new-list",
+        html: items.join( "" )
+      }).appendTo( "body" );
+    });
 
     return false;
 };
