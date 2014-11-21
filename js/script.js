@@ -21,14 +21,12 @@ function loadData() {
     var formattedURL = HTMLgoogleMapURL.replace("%data%", address);
     console.log(formattedURL);
 
-    // NYT API key: 4a9f8aaddf77876bf57d1d02b5c3cde0:19:70181836
-
     var HTMLimage = "<img src='%data%' class='bgimg'>";
     var formattedImage = HTMLimage.replace("%data%", formattedURL);
     $body.append(formattedImage);
     // load streetview
 
-    // YOUR CODE GOES HERE!
+    // NYT API
     baseURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=";
     sortQuery  = "&sort=newes"
     key = "&api-key=4a9f8aaddf77876bf57d1d02b5c3cde0:19:70181836";
@@ -48,20 +46,12 @@ function loadData() {
           '<p>' + article.snippet + '</p>' +
           '</li>');
       }
-
-      // var items = [];
-      // $.each( data, function( key, val ) {
-      //   item.push( "<li id='" + key + "'>" + val + "</li>");
-      // });
-      //
-      // $( "<ul/>", {
-      //   "class": "my-new-list",
-      //   html: items.join( "" )
-      // }).appendTo( "body" );
     }).error(function(e) {
       $nytHeaderElem.text('New York Times Articles Could Not Be Loaded');
       console.log(e);
     });
+
+    // WIKI API
 
     return false;
 };
